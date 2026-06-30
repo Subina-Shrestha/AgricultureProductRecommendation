@@ -55,7 +55,7 @@ ASP.NET Web Application  <-->  Flask Recommendation API
                                  (SVD + TF-IDF)
 ```
 
-The web application triggers calls to the ML service at key points — login, rating submission, and checkout — to keep recommendations up to date.
+The web application triggers calls to the ML service at key points i.e. login, rating submission, and checkout in order to keep recommendations up to date.
 
 ## Deployment
 
