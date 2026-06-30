@@ -7,8 +7,10 @@ namespace AgricultureProductRecommendation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["LastOrderID"] != null)
-                lblOrderID.Text = Session["LastOrderID"].ToString();
+            string orderID = Request.QueryString["OrderID"];
+
+            if (!string.IsNullOrEmpty(orderID))
+                lblOrderID.Text = orderID;
             else
                 Response.Redirect("~/HomePage.aspx");
         }

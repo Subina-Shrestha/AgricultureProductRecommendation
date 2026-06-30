@@ -7,8 +7,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class AdminLogin : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +24,7 @@ namespace AgricultureProductRecommendation
                 string query = "SELECT AdminID, FullName FROM Admins " +
                                "WHERE Email = @Email AND Password = @Password";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);

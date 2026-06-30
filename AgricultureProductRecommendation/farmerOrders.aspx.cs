@@ -9,8 +9,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class FarmerOrders : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +28,7 @@ namespace AgricultureProductRecommendation
                 SELECT 
                     o.OrderID, o.CustomerID, o.OrderDate,
                     o.TotalAmount, o.Status,
-                    o.FullName, o.Address, o.Phone,
+                    o.FullName, o.DeliveryAddress AS Address, o.Phone,
                     STUFF((
                         SELECT ', ' + p.ProductName + 
                                ' x' + CAST(oi2.Quantity AS NVARCHAR)
@@ -43,7 +41,7 @@ namespace AgricultureProductRecommendation
                 WHERE (@Status = '' OR o.Status = @Status)
                 ORDER BY o.OrderDate DESC";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Status", statusFilter);
@@ -82,14 +80,16 @@ namespace AgricultureProductRecommendation
         private void LoadStats()
         {
             string query = @"
-                SELECT
-                    COUNT(*)                                    AS TotalOrders,
-                    SUM(CASE WHEN Status='Pending'   THEN 1 ELSE 0 END) AS Pending,
-                    SUM(CASE WHEN Status='Delivered' THEN 1 ELSE 0 END) AS Delivered,
-                    ISNULL(SUM(TotalAmount), 0)                AS Revenue
-                FROM Orders";
+        SELECT
+            COUNT(*)                                          AS TotalOrders,
+            SUM(CASE WHEN Status='Pending'   THEN 1 ELSE 0 END) AS Pending,
+            SUM(CASE WHEN Status='Delivered' THEN 1 ELSE 0 END) AS Delivered,
+            ISNULL(SUM(TotalAmount), 0)                       AS TotalRevenue,
+            ISNULL(SUM(CASE WHEN Status='Delivered' 
+                            THEN TotalAmount ELSE 0 END), 0)  AS EarnedRevenue
+        FROM Orders";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 con.Open();
@@ -99,7 +99,8 @@ namespace AgricultureProductRecommendation
                     lblTotalOrders.Text = dr["TotalOrders"].ToString();
                     lblPendingOrders.Text = dr["Pending"].ToString();
                     lblDeliveredOrders.Text = dr["Delivered"].ToString();
-                    lblTotalRevenue.Text = dr["Revenue"].ToString();
+                    lblTotalRevenue.Text = Convert.ToDecimal(dr["TotalRevenue"]).ToString("0.00");
+                    lblDeliveredRevenue.Text = Convert.ToDecimal(dr["EarnedRevenue"]).ToString("0.00");
                 }
             }
         }
@@ -128,7 +129,7 @@ namespace AgricultureProductRecommendation
                 DropDownList ddl = (DropDownList)row.FindControl("ddlOrderStatus");
                 string newStatus = ddl.SelectedValue;
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(
                     "UPDATE Orders SET Status = @Status WHERE OrderID = @OrderID", con))
                 {

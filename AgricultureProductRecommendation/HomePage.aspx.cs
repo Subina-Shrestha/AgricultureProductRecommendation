@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -9,9 +8,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class WebForm2 : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -59,7 +55,7 @@ namespace AgricultureProductRecommendation
             GROUP BY p.ProductID, p.ProductName, p.Price,
                      p.PriceUnit, p.ImageUrl, p.Category";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@CustomerID", customerID);
@@ -97,7 +93,7 @@ namespace AgricultureProductRecommendation
                     p.IsTopProduct, p.DateAdded
                 ORDER BY AvgRating DESC";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 con.Open();
@@ -126,7 +122,7 @@ namespace AgricultureProductRecommendation
                     p.IsTopProduct, p.DateAdded
                 ORDER BY p.DateAdded DESC";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 con.Open();

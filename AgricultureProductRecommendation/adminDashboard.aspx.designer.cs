@@ -60,6 +60,69 @@ namespace AgricultureProductRecommendation
         protected global::System.Web.UI.WebControls.Label lblProductCount;
 
         /// <summary>
+        /// btnToggleAddFarmer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnToggleAddFarmer;
+
+        /// <summary>
+        /// txtFarmerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFarmerName;
+
+        /// <summary>
+        /// txtFarmerEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFarmerEmail;
+
+        /// <summary>
+        /// txtFarmerPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFarmerPhone;
+
+        /// <summary>
+        /// txtFarmerPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFarmerPassword;
+
+        /// <summary>
+        /// btnAddFarmer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddFarmer;
+
+        /// <summary>
+        /// lblAddFarmerMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAddFarmerMsg;
+
+        /// <summary>
         /// gvFarmers control.
         /// </summary>
         /// <remarks>

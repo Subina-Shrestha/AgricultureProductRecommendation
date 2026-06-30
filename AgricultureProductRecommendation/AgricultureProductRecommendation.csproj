@@ -94,6 +94,8 @@
     <Content Include="MyOrders.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConfig.cs" />
+    <Compile Include="smtpConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>

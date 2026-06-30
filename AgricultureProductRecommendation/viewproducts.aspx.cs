@@ -9,8 +9,6 @@ namespace AgricultureProductRecommendation
 
     public partial class viewproducts : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,7 +48,7 @@ namespace AgricultureProductRecommendation
         p.Rating, p.IsTopProduct, p.DateAdded
     ORDER BY " + orderBy;
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Search", search);

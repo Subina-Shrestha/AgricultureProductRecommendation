@@ -95,7 +95,7 @@
  <%-- ── ML Recommendations — add here ── --%>
         <asp:Panel ID="pnlMLRecommendations" runat="server" Visible="false">
             <div class="section-header mt-4" style="padding-top: 40px;">
-                <h2>⭐ Recommended For You</h2>
+                <h2>Recommended For You</h2>
                 <small class="text-muted">Based on your preferences</small>
             </div>
 

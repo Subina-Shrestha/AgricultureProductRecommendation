@@ -9,8 +9,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class ManageProduct : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +25,7 @@ namespace AgricultureProductRecommendation
 
         private void LoadProducts()
         {
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM Products ORDER BY DateAdded DESC", con))
             {
@@ -76,7 +74,7 @@ namespace AgricultureProductRecommendation
                                 IsTopProduct = @IsTopProduct
                              WHERE ProductID = @ProductID";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@ProductName", name);
@@ -102,7 +100,7 @@ namespace AgricultureProductRecommendation
         {
             int productID = Convert.ToInt32(gvProducts.DataKeys[e.RowIndex].Value);
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(
                 "DELETE FROM Products WHERE ProductID = @ProductID", con))
             {

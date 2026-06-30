@@ -33,9 +33,9 @@
 
     <div class="container">
 
-        <!-- Order Stats -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
+        <!-- Order Stats Row 1: Counts -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
                 <div class="card border-0 shadow-sm text-center p-3">
                     <h3 class="text-success fw-bold mb-0">
                         <asp:Label ID="lblTotalOrders" runat="server" Text="0" />
@@ -43,7 +43,7 @@
                     <small class="text-muted">Total Orders</small>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card border-0 shadow-sm text-center p-3">
                     <h3 class="text-warning fw-bold mb-0">
                         <asp:Label ID="lblPendingOrders" runat="server" Text="0" />
@@ -51,7 +51,7 @@
                     <small class="text-muted">Pending</small>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card border-0 shadow-sm text-center p-3">
                     <h3 class="text-primary fw-bold mb-0">
                         <asp:Label ID="lblDeliveredOrders" runat="server" Text="0" />
@@ -59,20 +59,60 @@
                     <small class="text-muted">Delivered</small>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm text-center p-3">
-                    <h3 class="text-success fw-bold mb-0">
-                        Rs. <asp:Label ID="lblTotalRevenue" runat="server" Text="0" />
-                    </h3>
-                    <small class="text-muted">Total Revenue</small>
+        </div>
+
+        <!-- Order Stats Row 2: Revenue Cards -->
+        <div class="row g-3 mb-4">
+
+            <%-- Total Ordered Revenue --%>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3 h-100"
+                     style="border-left: 5px solid #ffc107 !important;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-cart3 fs-4 text-warning"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small fw-semibold text-uppercase">
+                                Total Ordered Revenue
+                            </div>
+                            <h3 class="fw-bold text-warning mb-0">
+                                Rs. <asp:Label ID="lblTotalRevenue" runat="server" Text="0" />
+                            </h3>
+                            <small class="text-muted">Sum of all orders regardless of status</small>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <%-- Actual Earned Revenue (Delivered only) --%>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3 h-100"
+                     style="border-left: 5px solid #198754 !important;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-bag-check fs-4 text-success"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small fw-semibold text-uppercase">
+                                Actual Earned Revenue
+                            </div>
+                            <h3 class="fw-bold text-success mb-0">
+                                Rs. <asp:Label ID="lblDeliveredRevenue" runat="server" Text="0" />
+                            </h3>
+                            <small class="text-muted">Only from delivered orders</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Filter by Status -->
         <div class="bg-light border rounded p-3 mb-4 d-flex align-items-center gap-2">
             <label class="fw-semibold me-2">Filter by Status:</label>
-            <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-select" Style="width:180px;">
+            <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-select"
+                Style="width: 180px;">
                 <asp:ListItem Value="">All Orders</asp:ListItem>
                 <asp:ListItem Value="Pending">Pending</asp:ListItem>
                 <asp:ListItem Value="Processing">Processing</asp:ListItem>
@@ -159,6 +199,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
+                            <%-- Restored: Status dropdown --%>
                             <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>
                                     <asp:DropDownList ID="ddlOrderStatus" runat="server"

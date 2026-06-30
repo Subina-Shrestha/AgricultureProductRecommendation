@@ -118,7 +118,7 @@
                                     </p>
                                     <p class="mb-3">
                                         <i class="bi bi-geo-alt me-1 text-success"></i>
-                                        <%# Eval("Address") %>
+                                        <%# Eval("DeliveryAddress") %>
                                     </p>
 
                                     <div class="bg-success bg-opacity-10 

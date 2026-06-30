@@ -7,13 +7,11 @@ namespace AgricultureProductRecommendation
 {
     public partial class CustomerLogin : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["CustomerID"] != null)
                 Response.Redirect("~/Default.aspx");
+
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -21,11 +19,9 @@ namespace AgricultureProductRecommendation
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            string query = @"SELECT CustomerID, FullName, PreferredCategory 
-                             FROM Customers 
-                             WHERE Email = @Email AND Password = @Password";
+            string query = "SELECT CustomerID, FullName, PreferredCategory, Email FROM Customers WHERE Email = @Email AND Password = @Password";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Email", email);
@@ -39,6 +35,7 @@ namespace AgricultureProductRecommendation
                     Session["CustomerID"] = dr["CustomerID"].ToString();
                     Session["CustomerName"] = dr["FullName"].ToString();
                     Session["PreferredCategory"] = dr["PreferredCategory"].ToString();
+                    Session["CustomerEmail"] = dr["Email"].ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "success", "Swal.fire({ icon: 'success', title: 'Success!', text: 'Logged in Successfully!', confirmButtonColor: '#3085d6' }).then(() => { window.location.href = 'homepage.aspx'; });", true);
                     
@@ -50,4 +47,4 @@ namespace AgricultureProductRecommendation
             }
         }
     }
-}
+    }

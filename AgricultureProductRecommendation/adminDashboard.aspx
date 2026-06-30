@@ -1,7 +1,7 @@
-﻿<%@ Page Title="Admin Dashboard" Language="C#" 
-    MasterPageFile="~/Site1.Master" 
-    AutoEventWireup="true" 
-    CodeBehind="AdminDashboard.aspx.cs" 
+﻿<%@ Page Title="Admin Dashboard" Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
+    CodeBehind="AdminDashboard.aspx.cs"
     Inherits="AgricultureProductRecommendation.AdminDashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -10,15 +10,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <!-- Page Banner -->
-    <div class="text-white py-3 mb-4" style="background-color:#1a237e;">
+    <div class="text-white py-3 mb-4" style="background-color: #1a237e;">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h2 class="fw-bold mb-0">
                         <i class="bi bi-shield-check me-2"></i>Admin Dashboard
                     </h2>
-                    <small>
-                        Welcome,
+                    <small>Welcome,
                         <asp:Label ID="lblAdminName" runat="server"
                             Text="" CssClass="fw-bold" />
                     </small>
@@ -92,126 +91,157 @@
             <!-- ── Farmers Tab ── -->
             <div class="tab-pane fade show active" id="tabFarmers">
                 <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header text-white py-3"
-                        style="background-color:#1a237e;">
-                        <h5 class="mb-0 fw-bold">
-                            <i class="bi bi-people me-2"></i>All Farmers
-                        </h5>
-                    </div>
                     <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <asp:GridView ID="gvFarmers" runat="server"
-                                CssClass="table table-hover table-striped mb-0"
-                                AutoGenerateColumns="false"
-                                DataKeyNames="FarmerID"
-                                OnRowDeleting="gvFarmers_RowDeleting">
-                                <HeaderStyle CssClass="table-primary" />
-                                <Columns>
-                                    <asp:BoundField DataField="FarmerID"  HeaderText="ID" />
-                                    <asp:BoundField DataField="FullName"  HeaderText="Full Name" />
-                                    <asp:BoundField DataField="Email"     HeaderText="Email" />
-                                    <asp:BoundField DataField="Phone"     HeaderText="Phone" />
-                                    <asp:BoundField DataField="DateJoined" HeaderText="Date Joined" 
-                                        DataFormatString="{0:dd MMM yyyy}" />
-                                    <asp:TemplateField HeaderText="Action">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkDeleteFarmer" runat="server"
-                                                CommandName="Delete"
-                                                CssClass="btn btn-sm btn-outline-danger"
-                                                OnClientClick="return confirm('Are you sure you want to delete this farmer?');">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
+                        <div class="card-header text-white py-3 d-flex justify-content-between align-items-center"
+                            style="background-color: #1a237e;">
+                            <h5 class="mb-0 fw-bold">
+                                <i class="bi bi-people me-2"></i>All Farmers
+    </h5>
+                            <asp:Button ID="btnToggleAddFarmer" runat="server"
+                                Text="+ Add Farmer"
+                                CssClass="btn btn-sm btn-light"
+                                OnClientClick="document.getElementById('addFarmerPanel').classList.toggle('d-none'); return false;" />
                         </div>
+
+
+
+                        <!-- Add Farmer Form (hidden by default) -->
+                        <div id="addFarmerPanel" class="card-body border-bottom d-none">
+                            <div class="row g-2">
+                                <div class="col-md-3">
+                                    <asp:TextBox ID="txtFarmerName" runat="server" CssClass="form-control" placeholder="Full Name" />
+                                </div>
+                                <div class="col-md-3">
+                                    <asp:TextBox ID="txtFarmerEmail" runat="server" CssClass="form-control" placeholder="Email" />
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtFarmerPhone" runat="server" CssClass="form-control" placeholder="Phone" />
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtFarmerPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="Password" />
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:Button ID="btnAddFarmer" runat="server"
+                                        Text="Save"
+                                        CssClass="btn btn-success w-100"
+                                        OnClick="btnAddFarmer_Click" />
+                                </div>
+                            </div>
+                            <asp:Label ID="lblAddFarmerMsg" runat="server" CssClass="d-block mt-2" />
+                        </div>
+                        <asp:GridView ID="gvFarmers" runat="server"
+                            CssClass="table table-hover table-striped mb-0"
+                            AutoGenerateColumns="false"
+                            DataKeyNames="FarmerID"
+                            OnRowDeleting="gvFarmers_RowDeleting">
+                            <HeaderStyle CssClass="table-primary" />
+                            <Columns>
+                                <asp:BoundField DataField="FarmerID" HeaderText="ID" />
+                                <asp:BoundField DataField="FullName" HeaderText="Full Name" />
+                                <asp:BoundField DataField="Email" HeaderText="Email" />
+                                <asp:BoundField DataField="Phone" HeaderText="Phone" />
+                                <asp:BoundField DataField="DateJoined" HeaderText="Date Joined"
+                                    DataFormatString="{0:dd MMM yyyy}" />
+                                <asp:TemplateField HeaderText="Action">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDeleteFarmer" runat="server"
+                                            CommandName="Delete"
+                                            CssClass="btn btn-sm btn-outline-danger"
+                                            OnClientClick="return confirm('Are you sure you want to delete this farmer?');">
+                                                <i class="bi bi-trash"></i> Delete
+                                        </asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
+        
 
-            <!-- ── Customers Tab ── -->
-            <div class="tab-pane fade" id="tabCustomers">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header text-white py-3"
-                        style="background-color:#2e7d32;">
-                        <h5 class="mb-0 fw-bold">
-                            <i class="bi bi-person-heart me-2"></i>All Customers
-                        </h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <asp:GridView ID="gvCustomers" runat="server"
-                                CssClass="table table-hover table-striped mb-0"
-                                AutoGenerateColumns="false"
-                                DataKeyNames="CustomerID"
-                                OnRowDeleting="gvCustomers_RowDeleting">
-                                <HeaderStyle CssClass="table-success" />
-                                <Columns>
-                                    <asp:BoundField DataField="CustomerID" HeaderText="ID" />
-                                    <asp:BoundField DataField="FullName"   HeaderText="Full Name" />
-                                    <asp:BoundField DataField="Email"      HeaderText="Email" />
-                                    <asp:BoundField DataField="Phone"      HeaderText="Phone" />
-                                    <asp:BoundField DataField="PreferredCategory" HeaderText="Preference" />
-                                    <asp:BoundField DataField="DateJoined" HeaderText="Date Joined"
-                                        DataFormatString="{0:dd MMM yyyy}" />
-                                    <asp:TemplateField HeaderText="Action">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkDeleteCustomer" runat="server"
-                                                CommandName="Delete"
-                                                CssClass="btn btn-sm btn-outline-danger"
-                                                OnClientClick="return confirm('Are you sure you want to delete this customer?');">
+        <!-- ── Customers Tab ── -->
+        <div class="tab-pane fade" id="tabCustomers">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header text-white py-3"
+                    style="background-color: #2e7d32;">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-person-heart me-2"></i>All Customers
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <asp:GridView ID="gvCustomers" runat="server"
+                            CssClass="table table-hover table-striped mb-0"
+                            AutoGenerateColumns="false"
+                            DataKeyNames="CustomerID"
+                            OnRowDeleting="gvCustomers_RowDeleting">
+                            <HeaderStyle CssClass="table-success" />
+                            <Columns>
+                                <asp:BoundField DataField="CustomerID" HeaderText="ID" />
+                                <asp:BoundField DataField="FullName" HeaderText="Full Name" />
+                                <asp:BoundField DataField="Email" HeaderText="Email" />
+                                <asp:BoundField DataField="Phone" HeaderText="Phone" />
+                                <asp:BoundField DataField="PreferredCategory" HeaderText="Preference" />
+                                <asp:BoundField DataField="DateJoined" HeaderText="Date Joined"
+                                    DataFormatString="{0:dd MMM yyyy}" />
+                                <asp:TemplateField HeaderText="Action">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDeleteCustomer" runat="server"
+                                            CommandName="Delete"
+                                            CssClass="btn btn-sm btn-outline-danger"
+                                            OnClientClick="return confirm('Are you sure you want to delete this customer?');">
                                                 <i class="bi bi-trash"></i> Delete
-                                            </asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
+                                        </asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- ── Products Tab ── -->
-            <div class="tab-pane fade" id="tabProducts">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header text-white py-3"
-                        style="background-color:#f57f17;">
-                        <h5 class="mb-0 fw-bold">
-                            <i class="bi bi-basket me-2"></i>All Products
-                        </h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <asp:GridView ID="gvProducts" runat="server"
-                                CssClass="table table-hover table-striped mb-0"
-                                AutoGenerateColumns="false"
-                                DataKeyNames="ProductID">
-                                <HeaderStyle CssClass="table-warning" />
-                                <Columns>
-                                    <asp:BoundField DataField="ProductID"   HeaderText="ID" />
-                                    <asp:BoundField DataField="ProductName" HeaderText="Product" />
-                                    <asp:BoundField DataField="Category"    HeaderText="Category" />
-                                    <asp:BoundField DataField="Price"       HeaderText="Price"
-                                        DataFormatString="Rs. {0}" />
-                                    <asp:BoundField DataField="PriceUnit"   HeaderText="Unit" />
-                                    <asp:BoundField DataField="Rating"      HeaderText="Rating" />
-                                    <asp:TemplateField HeaderText="Top Product">
-                                        <ItemTemplate>
-                                            <%# Convert.ToBoolean(Eval("IsTopProduct")) ?
+        <!-- ── Products Tab ── -->
+        <div class="tab-pane fade" id="tabProducts">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header text-white py-3"
+                    style="background-color: #f57f17;">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-basket me-2"></i>All Products
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <asp:GridView ID="gvProducts" runat="server"
+                            CssClass="table table-hover table-striped mb-0"
+                            AutoGenerateColumns="false"
+                            DataKeyNames="ProductID">
+                            <HeaderStyle CssClass="table-warning" />
+                            <Columns>
+                                <asp:BoundField DataField="ProductID" HeaderText="ID" />
+                                <asp:BoundField DataField="ProductName" HeaderText="Product" />
+                                <asp:BoundField DataField="Category" HeaderText="Category" />
+                                <asp:BoundField DataField="Price" HeaderText="Price"
+                                    DataFormatString="Rs. {0}" />
+                                <asp:BoundField DataField="PriceUnit" HeaderText="Unit" />
+                                <asp:BoundField DataField="Rating" HeaderText="Rating" />
+                                <asp:TemplateField HeaderText="Top Product">
+                                    <ItemTemplate>
+                                        <%# Convert.ToBoolean(Eval("IsTopProduct")) ?
                                                 "<span class='badge bg-success'>Yes</span>" :
                                                 "<span class='badge bg-secondary'>No</span>" %>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="mb-5"></div>
+        </div>
+
     </div>
+    <div class="mb-5"></div>
+    
 
 </asp:Content>

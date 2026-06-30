@@ -8,8 +8,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class ProductDetail : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         int currentProductID = 0;
 
@@ -57,7 +55,7 @@ namespace AgricultureProductRecommendation
         {
             string query = "SELECT * FROM Products WHERE ProductID = @ProductID";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@ProductID", productID);
@@ -111,7 +109,7 @@ namespace AgricultureProductRecommendation
                              FROM Ratings
                              WHERE ProductID = @ProductID";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@ProductID", productID);
@@ -134,7 +132,7 @@ namespace AgricultureProductRecommendation
                                      WHERE ProductID = @ProductID 
                                      AND CustomerID = @CustomerID";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(checkQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@ProductID", productID);
@@ -172,7 +170,7 @@ namespace AgricultureProductRecommendation
                             VALUES 
                             (@ProductID, @CustomerID, @Rating, GETDATE())";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@ProductID", productID);
@@ -205,7 +203,7 @@ namespace AgricultureProductRecommendation
             else
             {
                 string catQuery = "SELECT Category FROM Products WHERE ProductID = @ID";
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(catQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@ID", currentProductID);
@@ -224,7 +222,7 @@ namespace AgricultureProductRecommendation
                              AND   ProductID != @CurrentID
                              ORDER BY Rating DESC";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Category", category);
@@ -253,7 +251,7 @@ namespace AgricultureProductRecommendation
                                   (CustomerID, ProductID, ViewedAt)
                                   VALUES (@CustomerID, @ProductID, GETDATE())";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@CustomerID", customerID);

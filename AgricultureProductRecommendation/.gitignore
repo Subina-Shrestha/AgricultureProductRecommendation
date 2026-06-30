@@ -1,0 +1,7 @@
+DBConfig.cs
+smtpConfig.cs
+Web.config
+bin/
+obj/
+.vs/
+*.log

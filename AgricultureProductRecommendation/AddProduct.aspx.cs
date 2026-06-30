@@ -8,8 +8,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class AddProduct : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,7 +61,7 @@ namespace AgricultureProductRecommendation
                                  @ImageUrl, @Category, @Description,
                                  @IsTopProduct, GETDATE())";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@ProductName", productName);

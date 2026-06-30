@@ -42,6 +42,24 @@ namespace AgricultureProductRecommendation
         protected global::System.Web.UI.WebControls.TextBox txtAddress;
 
         /// <summary>
+        /// hdnLatitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLatitude;
+
+        /// <summary>
+        /// hdnLongitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLongitude;
+
+        /// <summary>
         /// ddlPayment control.
         /// </summary>
         /// <remarks>

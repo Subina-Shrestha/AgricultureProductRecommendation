@@ -8,8 +8,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class MyOrders : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,14 +23,14 @@ namespace AgricultureProductRecommendation
             int customerID = Convert.ToInt32(Session["CustomerID"]);
 
             string query = @"
-                SELECT OrderID, CustomerID, OrderDate,
-                       TotalAmount, Status,
-                       FullName, Address, Phone
-                FROM Orders
-                WHERE CustomerID = @CustomerID
-                ORDER BY OrderDate DESC";
+    SELECT OrderID, CustomerID, OrderDate,
+           TotalAmount, Status,
+           FullName, DeliveryAddress, Phone
+    FROM Orders
+    WHERE CustomerID = @CustomerID
+    ORDER BY OrderDate DESC";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@CustomerID", customerID);
@@ -65,7 +63,7 @@ namespace AgricultureProductRecommendation
                 JOIN Products p ON oi.ProductID = p.ProductID
                 WHERE oi.OrderID = @OrderID";
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderID", orderID);

@@ -7,8 +7,6 @@ namespace AgricultureProductRecommendation
 {
     public partial class CustomerRegister : Page
     {
-        string connStr = WebConfigurationManager
-                         .ConnectionStrings["AgroDBCon"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,7 +26,7 @@ namespace AgricultureProductRecommendation
 
                 // Check if email already exists
                 string checkQuery = "SELECT COUNT(*) FROM Customers WHERE Email = @Email";
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(checkQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
@@ -49,7 +47,7 @@ namespace AgricultureProductRecommendation
                                 VALUES 
                                 (@FullName, @Email, @Password, @Phone, @PreferredCategory, GETDATE())";
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SqlConnection con = new SqlConnection(DbConfig.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@FullName", fullName);
