@@ -23,40 +23,68 @@ namespace AgricultureProductRecommendation
                     checkCmd.Parameters.AddWithValue("@Email", email);
                     object result = checkCmd.ExecuteScalar();
 
-                    if (result != null)
+                    if (result == null)
                     {
-                        string newPassword = GenerateRandomPassword(5);
+                        // Email not found — show error instead of proceeding
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "notFound",
+                            "Swal.fire({ " +
+                            "icon: 'error', " +
+                            "title: 'Email Not Found', " +
+                            "text: 'No account is registered with this email address.', " +
+                            "confirmButtonColor: '#d33' " +
+                            "});", true);
+                        return;
+                    }
 
-                        string updateQuery = "UPDATE Customers SET Password = @Password WHERE Email = @Email";
-                        using (SqlCommand updateCmd = new SqlCommand(updateQuery, con))
-                        {
-                            updateCmd.Parameters.AddWithValue("@Password", newPassword);
-                            updateCmd.Parameters.AddWithValue("@Email", email);
-                            updateCmd.ExecuteNonQuery();
-                        }
+                    string newPassword = GenerateRandomPassword(5);
 
-                        string body = "<p>Hello,</p>"
-                            + "<p>Your AgroRecSys password has been reset. Here is your new password:</p>"
-                            + "<p style='font-size:18px;font-weight:bold;letter-spacing:1px;'>" + newPassword + "</p>"
-                            + "<p>Please log in and change this password from your account settings if you'd like a different one.</p>"
-                            + "<p>If you didn't request this, please contact support immediately.</p>";
+                    string updateQuery = "UPDATE Customers SET Password = @Password WHERE Email = @Email";
+                    using (SqlCommand updateCmd = new SqlCommand(updateQuery, con))
+                    {
+                        updateCmd.Parameters.AddWithValue("@Password", newPassword);
+                        updateCmd.Parameters.AddWithValue("@Email", email);
+                        updateCmd.ExecuteNonQuery();
+                    }
 
-                        try
-                        {
-                            EmailHelper.SendEmail(email, "Your New AgroRecSys Password", body);
-                        }
-                        catch (Exception)
-                        {
-                            // Log in real deployment; don't reveal SMTP errors to the user
-                        }
+                    string body = "<p>Hello,</p>"
+                        + "<p>Your AgroRecSys password has been reset. Here is your new password:</p>"
+                        + "<p style='font-size:18px;font-weight:bold;letter-spacing:1px;'>" + newPassword + "</p>"
+                        + "<p>Please log in and change this password from your account settings if you'd like a different one.</p>"
+                        + "<p>If you didn't request this, please contact support immediately.</p>";
+
+                    bool emailSent = true;
+                    try
+                    {
+                        EmailHelper.SendEmail(email, "Your New AgroRecSys Password", body);
+                    }
+                    catch (Exception)
+                    {
+                        emailSent = false;
+                    }
+
+                    if (!emailSent)
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "sendFailed",
+                            "Swal.fire({ " +
+                            "icon: 'error', " +
+                            "title: 'Something Went Wrong', " +
+                            "text: 'We could not send the email right now. Please try again shortly.', " +
+                            "confirmButtonColor: '#d33' " +
+                            "});", true);
+                        return;
                     }
                 }
             }
 
-            // Same message shown whether or not the email exists — avoids revealing which emails are registered
-            pnlMessage.Visible = true;
-            lblMessage.Text = "If that email is registered, a new password has been sent to it.";
-            txtEmail.Text = "";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "success",
+                "Swal.fire({ " +
+                "icon: 'success', " +
+                "title: 'Congratulations!', " +
+                "text: 'A new password is sent to your mail, Please check your email!', " +
+                "confirmButtonColor: '#2e7d32', " +
+                "timer: 5000, " +
+                "timerProgressBar: true " +
+                "}).then(() => { window.location.href = 'CustomerLogin.aspx'; });", true);
         }
 
         private string GenerateRandomPassword(int length)
@@ -74,7 +102,7 @@ namespace AgricultureProductRecommendation
             sb.Append(lower[rng.Next(lower.Length)]);
             sb.Append(digits[rng.Next(digits.Length)]);
 
-            for (int i = 1; i < length; i++)
+            for (int i = 3; i < length; i++)
                 sb.Append(all[rng.Next(all.Length)]);
 
             // Shuffle so the guaranteed characters aren't always in the same position

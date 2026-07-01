@@ -50,7 +50,7 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="mb-4">
+                        <div class="mb-2">
                             <label class="form-label fw-semibold">Password</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-success text-white">
@@ -61,18 +61,21 @@
                                     placeholder="Enter your password"
                                     TextMode="Password"
                                     ClientIDMode="Static" />
-                                <button type="button" class="toggle-pw" onclick="toggleVisibility('txtPassword', 'eyePassword')"
+                                <button type="button" class="input-group-text bg-white border border-start-0"
+                                    onclick="toggleVisibility('txtPassword', 'eyePassword')"
                                     title="Show / hide password" tabindex="-1">
                                     <i id="eyePassword" class="bi bi-eye"></i>
                                 </button>
                             </div>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                                 ControlToValidate="txtPassword"
                                 ErrorMessage="Password is required"
                                 CssClass="text-danger small"
                                 Display="Dynamic" />
                         </div>
-                        <div class="mb-3 text-end">
+
+                        <!-- Forgot Password -->
+                        <div class="mb-4 text-end">
                             <a href="ForgotPassword.aspx" class="text-success small">Forgot Password?</a>
                         </div>
 
@@ -93,26 +96,26 @@
                     </div>
 
                 </div>
+
             </div>
+            <div class="mb-5"></div>
         </div>
-        <div class="mb-5"></div>
-    </div>
+        </div>
 
-    <script>
-        function toggleVisibility(inputId, iconId) {
-            var input = document.getElementById(inputId);
-            var icon = document.getElementById(iconId);
+        <script>
+            function toggleVisibility(inputId, iconId) {
+                var input = document.getElementById(inputId);
+                var icon = document.getElementById(iconId);
 
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("bi-eye");
-                icon.classList.add("bi-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("bi-eye-slash");
-                icon.classList.add("bi-eye");
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+                }
             }
-        }
-    </script>
-
+        </script>
 </asp:Content>
