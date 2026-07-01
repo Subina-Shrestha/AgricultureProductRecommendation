@@ -131,8 +131,13 @@
                             <li class="nav-item">
                                 <a href="MyOrders.aspx" class="nav-link">
                                     <i class="bi bi-bag-check me-1"></i>My Orders
-    </a>
+                                </a>
                             </li>
+                            <li class="nav-item">
+                            <a href="ChangePassword.aspx" class="nav-link">
+                                <i class="bi bi-shield-lock me-1"></i>Change Password
+                            </a>
+                             </li>
                             <asp:LinkButton ID="lnkCustomerLogout" runat="server"
                                 CssClass="nav-link text-danger"
                                 CausesValidation="false"
@@ -163,7 +168,7 @@
                         <li class="nav-item">
                             <a href="FarmerOrders.aspx" class="nav-link">
                                 <i class="bi bi-bag-check me-1"></i>Placed Orders
-    </a>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <span class="nav-link text-warning fw-semibold">

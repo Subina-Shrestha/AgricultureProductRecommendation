@@ -1,7 +1,7 @@
-﻿<%@ Page Title="Customer Login" Language="C#" 
-    MasterPageFile="~/Site1.Master" 
-    AutoEventWireup="true" 
-    CodeBehind="CustomerLogin.aspx.cs" 
+﻿<%@ Page Title="Customer Login" Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
+    CodeBehind="CustomerLogin.aspx.cs"
     Inherits="AgricultureProductRecommendation.CustomerLogin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -59,13 +59,21 @@
                                 <asp:TextBox ID="txtPassword" runat="server"
                                     CssClass="form-control"
                                     placeholder="Enter your password"
-                                    TextMode="Password" />
+                                    TextMode="Password"
+                                    ClientIDMode="Static" />
+                                <button type="button" class="toggle-pw" onclick="toggleVisibility('txtPassword', 'eyePassword')"
+                                    title="Show / hide password" tabindex="-1">
+                                    <i id="eyePassword" class="bi bi-eye"></i>
+                                </button>
                             </div>
-                            <asp:RequiredFieldValidator ID="rfvPassword" runat="server"
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                                 ControlToValidate="txtPassword"
                                 ErrorMessage="Password is required"
                                 CssClass="text-danger small"
                                 Display="Dynamic" />
+                        </div>
+                        <div class="mb-3 text-end">
+                            <a href="ForgotPassword.aspx" class="text-success small">Forgot Password?</a>
                         </div>
 
                         <!-- Login Button -->
@@ -79,8 +87,7 @@
                     </div>
 
                     <div class="card-footer text-center py-3 bg-light">
-                        <small class="text-muted">
-                            Don't have an account?
+                        <small class="text-muted">Don't have an account?
                             <a href="CustomerRegister.aspx" class="text-success fw-semibold">Register here</a>
                         </small>
                     </div>
@@ -90,5 +97,22 @@
         </div>
         <div class="mb-5"></div>
     </div>
+
+    <script>
+        function toggleVisibility(inputId, iconId) {
+            var input = document.getElementById(inputId);
+            var icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
 
 </asp:Content>

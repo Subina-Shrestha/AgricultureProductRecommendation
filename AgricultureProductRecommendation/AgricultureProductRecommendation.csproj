@@ -77,6 +77,7 @@
     <Content Include="Images\tomato.png" />
     <Content Include="Images\Vegetables.png" />
     <Content Include="customstylesheet.css" />
+    <Content Include=".gitignore.txt" />
     <Content Include="Web.config" />
     <Content Include="viewproducts.aspx" />
     <Content Include="HomePage.aspx" />
@@ -92,8 +93,12 @@
     <Content Include="OrderSuccess.aspx" />
     <Content Include="farmerOrders.aspx" />
     <Content Include="MyOrders.aspx" />
+    <Content Include="ResetPassword.aspx" />
+    <Content Include="ForgotPassword.aspx" />
+    <Content Include="ChangePassword.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailHelper.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="smtpConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +206,27 @@
     </Compile>
     <Compile Include="MyOrders.aspx.designer.cs">
       <DependentUpon>MyOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
